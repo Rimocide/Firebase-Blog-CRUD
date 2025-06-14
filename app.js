@@ -21,7 +21,7 @@ const io = new Server (httpServer, {
     }
 });
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 
 const frontendFirebaseConfig = {
     apiKey: process.env.FRONTEND_FIREBASE_API_KEY,
@@ -50,6 +50,7 @@ app.use(express.static(path.join(__dirname, './public')));
 app.get('/api/firebase-client-config', (req, res) => {
     res.status(200).json(frontendFirebaseConfig);
 });
+
 //Register users route
 app.use('/api/auth', registerRouter);
 
@@ -62,8 +63,6 @@ app.use((err, req, res, next) => {
         details: process.env.NODE_ENV === 'development' ? err.message : undefined
     });
 });
-
-
 
 
 async function startServer() {
